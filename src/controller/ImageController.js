@@ -3,6 +3,7 @@ const Image = require('../models/Image');
 module.exports = class ImageController {
     
     static addImage = async (req, res) => {
+
         let payload = req.body;
         if (req.file) var fileName = req.file.filename;
         payload.fileName = fileName;

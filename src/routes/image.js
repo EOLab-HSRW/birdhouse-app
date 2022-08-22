@@ -1,9 +1,10 @@
 const express = require("express");
 const ImageController = require("../controller/ImageController");
+const { requireAuth } = require("../middleware/authMiddleware");
 const fileUpload = require("../utils/fileUpload");
 const router = express.Router();
 
-router.post('/add-image', fileUpload("./storage/images"), ImageController.addImage);
+router.post('/add-image', requireAuth ,fileUpload("./storage/images"), ImageController.addImage);
 router.get('/getAll', ImageController.getAll);
 
 module.exports = router;

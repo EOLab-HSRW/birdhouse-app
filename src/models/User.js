@@ -12,13 +12,13 @@ const DataSchema = new mongoose.Schema({
     },
 }, { versionKey: false});
 
-schema.pre('save', async function (next) {
+DataSchema.pre('save', async function (next) {
 	const salt = await bcrypt.genSalt();
 	this.password = await bcrypt.hash(this.password, salt);
 	next();
 });
 
-schema.statics.login = async function(username, password) {
+DataSchema.statics.login = async function(username, password) {
 	const user = await this.findOne({ username });
 	if (user) {
 	  const auth = await bcrypt.compare(password, user.password);

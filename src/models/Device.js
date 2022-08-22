@@ -5,8 +5,9 @@ const DataSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    devicePhoto: {
+    deviceSchool: {
         type: String,
+        required: true,
     },
 }, { versionKey: false});
 
