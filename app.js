@@ -5,12 +5,13 @@ const app = new express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const multer = require("multer");
+const config = require("./src/config/config")
 
 app.use(bodyParser.json());
 
 app.use(cors());
 
-const URI = "mongodb+srv://admin:admin@cluster0.91baq8q.mongodb.net/?retryWrites=true&w=majority"
+const URI = config.DB_URL
 
 mongoose.connect(URI,
     err => {

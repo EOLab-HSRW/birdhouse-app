@@ -25,11 +25,11 @@ module.exports = class ImageController {
 
     static getAll = async (req, res) => {
         try{
-            const all = await Image.find();
+            const all = await Image.find({device: req.params.id})
             
             return res.status(200).json({
                 code: 200,
-                message: "Current Images!",
+                message: "Current Device Images!",
                 data: all,
             });
         } catch (err) {

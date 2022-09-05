@@ -1,10 +1,10 @@
 const jwt = require("jsonwebtoken")
 const User = require("../models/User");
-const config = require('../config/authKey.config');
+const config = require('../config/config');
 
 
 const createToken = (id) => {
-    return jwt.sign({ id }, config.secret, {
+    return jwt.sign({ id }, config.SECRET, {
         expiresIn: 3*24*60*60*1000
     })
 }

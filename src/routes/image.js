@@ -5,6 +5,6 @@ const fileUpload = require("../utils/fileUpload");
 const router = express.Router();
 
 router.post('/add-image', requireAuth ,fileUpload("./storage/images"), ImageController.addImage);
-router.get('/getAll', ImageController.getAll);
+router.get('/getAll/:id', ImageController.getAll);
 
 module.exports = router;

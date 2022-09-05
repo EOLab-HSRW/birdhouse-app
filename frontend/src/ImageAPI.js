@@ -6,8 +6,8 @@ const api = "http://localhost:5000"
 //         body: data,
 //     })
 
-export const getAll = () =>
-    fetch(`${api}/api/v1/getAll`, {
+export const getImages = () =>
+    fetch(`${api}/api/v1/image/getAll`, {
         method: 'GET',
     })
     .then(res => res.json())
@@ -15,3 +15,9 @@ export const getAll = () =>
 export const imagePreview = (id) =>{
     return `${api}/image/${id}`
 }
+
+export const getDevices = () =>
+    fetch(`${api}/api/v1/Device/getAll`, {
+        method: 'GET',
+    })
+    .then(res => res.json())
