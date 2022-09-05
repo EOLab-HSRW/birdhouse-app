@@ -15,7 +15,7 @@ class App extends Component{
             <Route path="/" element={<Layout/>}>
               <Route index element={<Landing />} />
               <Route path="/devices" element={<Devices />} />
-              <Route path="/:id/gallary" element={<Gallery />} />
+              <Route path="/:id/gallery" element={<Gallery />} />
               <Route path="*" element={<NoPage />} />
             </Route>
           </Routes>

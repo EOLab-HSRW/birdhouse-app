@@ -1,31 +1,33 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
 import Photo from '../../components/Photo/Photo'
-import { getAll } from '../../ImageAPI';
+import { getImages } from '../../ImageAPI';
 
-export default class Gallary extends Component {
+function Gallery() {
     
-    state = {
-        images: [],
-    }
+    const [images, setImages] = useState([])
+    const {id} = useParams()
 
-    async componentDidMount() {
-        await getAll()
-        .then(res => res.data)
-        .then((images) => {
-            this.setState(() => ({
-                images
-            }))
+    useEffect(() => {
+        let mounted = true;
+        getImages(id)
+        .then(images => {
+            if(mounted) {
+                setImages(images.data)
+            }
         })
-    }
 
-    render() {
-        const {images} = this.state
-        return (
-        <div>
-           {images && images.map((image, i) => (
-            <Photo key={i} image={image.fileName}/>
-           ))}
-        </div>
-        )
-    }
+        return () => mounted = false;
+    }, [id])
+
+  return (
+    <div>
+        Gallery
+        {images && images.map((image, i) => (
+        <Photo key={i} image={image.fileName}/>
+        ))}
+    </div>
+  )
 }
+
+export default Gallery
