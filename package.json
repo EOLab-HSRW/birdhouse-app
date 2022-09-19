@@ -2,8 +2,11 @@
   "name": "image_api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./backend/index.js",
   "scripts": {
+    "start": "node backend/index.js",
+    "server": "nodemon backend/index.js",
+    "client": "npm start --prefix client",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

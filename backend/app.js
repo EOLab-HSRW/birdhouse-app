@@ -1,23 +1,15 @@
 const express = require("express");
-const router = require("./src/routes/api");
+const router = require("./routes/api");
 const cors = require("cors");
 const app = new express();
 const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
 const multer = require("multer");
-const config = require("./src/config/config")
 
 app.use(bodyParser.json());
 
 app.use(cors());
 
-const URI = config.DB_URL
 
-mongoose.connect(URI,
-    err => {
-        if(err) throw err;
-        console.log("Connected to DB");
-    });
 
 app.use("/image", express.static("storage/images"));
 
@@ -31,6 +23,15 @@ app.use((err, req, res, next) => {
         });
     }
 });
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('frontend/build'));
+
+    app.get('*', (req,res) => {
+        res.sendFile(path.resolve(__dirname, 'frontend','build','index.html'));
+    });
+
+} 
 
 app.use('*', (req, res) => {
     res.status(404).json({ 
