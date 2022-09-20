@@ -1,9 +1,10 @@
 import React from 'react'
+import { imagePreview } from '../../ImageAPI'
 
-function CurrentPhoto() {
+function CurrentPhoto({image}) {
   return (
-    <div>
-        CurrentPhoto
+    <div className='rounded-sm outline outline-gray/80 shadow-lg shadow-black'>
+      { image && <img className='h-1/2 m-auto rounded-sm' src={imagePreview(image.fileName)} alt="Not found"/>}
     </div>
   )
 }

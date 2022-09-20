@@ -5,25 +5,25 @@ import { Link } from 'react-router-dom';
 function Device({device}) {
   return (
 
-    <div className='h-40 border border-gray/40 shadow-xl rounded-md m-2 p-4 flex flex-col justify-between '>
-        <div className='flex flex-row justify-right  items-center py-1 text-gray'>
+    <div className='h-60 border border-gray/40 shadow-xl rounded-md m-3 flex flex-col justify-between hover:scale-105 transition duration-250 ease-in-out'>
+        <div className='flex flex-row justify-right  items-center py-6'>
             <div>
-                <TbDrone className='mx-1' size="1.2rem"/>
+                <TbDrone className='mx-2 ml-6' size={22}/>
             </div>
-            <div className='flex flex-col px-2'>
-                <div className='font-bold text-base'>
+            <div className='flex flex-col px-4'>
+                <div className='font-bold text-neutral-800 text-sm'>
                     {device.deviceName}
                 </div>
-                <div className='text-xs'>
+                <div className='text-tiny text-gray'>
                     {device.deviceSchool}
                 </div>
             </div>
         </div>
-        <div className='flex-grow'>
-            Center
+        <div className='flex-grow bg-gray px-0'>
+            
         </div>
-        <div className='text-sm font-semibold text-purple-600 hover:text-purple-600 visited:text-purple-600'>
-            <Link to={`/${device._id}/gallery`}>View Gallery</Link>
+        <div className='px-6 py-3'>
+            <Link id='view' to={`/${device._id}/gallery`}>View Gallery</Link>
         </div>
     </div>
   )

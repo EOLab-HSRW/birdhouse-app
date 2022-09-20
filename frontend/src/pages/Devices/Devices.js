@@ -20,7 +20,7 @@ function Devices() {
 
   return (
     <div className='flex-grow'>
-      <div className='grid grid-cols-6'>
+      <div className='grid grid-cols-5'>
         {devices && devices.map((device) => (
           <Device key={device._id} device={device}/>
         ))}

@@ -2,10 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-
-}
-
-code {
-
-}
+@layer base {
+    #view {
+        @apply text-sm font-semibold text-purple-600;
+    }
+    #view:hover {
+        @apply text-purple-600;
+    }
+    #view:visited {
+        @apply text-purple-600;
+    }
+  }
