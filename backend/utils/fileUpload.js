@@ -1,17 +1,19 @@
 const multer = require("multer");
 const path = require("path");
 
-const storage = (destination) => multer.diskStorage({
+const destination = './backend/storage/images'
+
+const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        return cb(null, destination)
+        cb(null, destination)
     },
     filename: (req, file, cb) => {
-        return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
+        cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
     },
 });
 
-const fileUpload = (destination) => multer({
-    storage: storage(destination),
+const fileUpload = multer({
+    storage: storage,
     limits: {
         fileSize: 2 * 1024 * 1024, //2mb
     },
@@ -26,6 +28,12 @@ const fileUpload = (destination) => multer({
     onError: function(err, next){
         return console.log('Error: ', err);
     },
-}).single('image');
+});
 
-module.exports = fileUpload;
+module.exports.send = (req, res, next) => {
+    
+    return fileUpload.single('image')(req, res, () => {
+        if (!req.file) return res.json({ error: 'Only these files extensions allowed: PNG, JPG or JPEG!' })
+        next()
+    })
+}

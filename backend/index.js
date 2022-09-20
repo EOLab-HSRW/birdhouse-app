@@ -5,10 +5,7 @@ const URI = config.DB_URL
 const port = process.env.PORT || 5000;
 
 mongoose
-.connect(URI, { 
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
+.connect(URI)
 .then(() => {
     console.log("Connected to DB");
     const app = require('./app');

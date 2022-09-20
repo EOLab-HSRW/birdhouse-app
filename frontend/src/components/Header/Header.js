@@ -4,15 +4,15 @@ import { Link } from 'react-router-dom'
 
 function Header() {
   return (
-    <div class='bg-lime h-20 w-full subpixel-antialiased flex flex-row items-center p-6'>
-      <div class='text-gray text-center basis-11/12'>
+    <div className='bg-lime h-20 w-full subpixel-antialiased flex flex-row items-center p-6 mb-2'>
+      <div className='text-gray text-center text-xl basis-11/12'>
         <Link to="/">Some fancy Cam Viewer Name</Link>
       </div>
-      <div class='basis-1/12'>
-        <div class='flex flex-row justify-evenly'>
-          <NL class='h-4 rounded'/>
-          <GB class='h-4 rounded'/>
-          <DE class='h-4 rounded'/>
+      <div className='basis-1/12'>
+        <div className='flex flex-row gap-1.5'>
+          <NL className='h-4 rounded'/>
+          <GB className='h-4 rounded'/>
+          <DE className='h-4 rounded'/>
         </div>
       </div>
     </div>

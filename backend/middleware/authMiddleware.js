@@ -3,7 +3,7 @@ const User = require("../models/Device");
 const config = require('../config/config');
 
 const requireAuth = (req, res, next) => {
-
+  
   const { authorization } = req.headers;
 
   if (authorization) {
@@ -13,6 +13,7 @@ const requireAuth = (req, res, next) => {
           auth: false
         });
       } else {
+        req.id = decodedToken.id
         next()
       }
     })

@@ -1,11 +1,5 @@
 const api = "http://localhost:5000"
 
-// export const addImage = (data) =>
-//     fetch(`${api}/api/v1/add-image`, {
-//         method: 'POST',
-//         body: data,
-//     })
-
 export const getImages = (id) =>
     fetch(`${api}/api/v1/image/getAll/${id}`, {
         method: 'GET',

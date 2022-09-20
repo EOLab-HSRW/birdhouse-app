@@ -1,13 +1,4 @@
-const jwt = require("jsonwebtoken")
 const User = require("../models/User");
-const config = require('../config/config');
-
-
-const createToken = (id) => {
-    return jwt.sign({ id }, config.SECRET, {
-        expiresIn: 3*24*60*60*1000
-    })
-}
 
 module.exports = class UserController {
     
@@ -15,9 +6,7 @@ module.exports = class UserController {
         try {
             let { login } = req.body;
             const { username, password } = login
-            const user = await User.login(username, password)
-            const token = createToken(user._id);
-            req.token = token
+            await User.login(username, password)
             next();
         } catch (error) {
             res.status(501).json({
