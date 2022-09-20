@@ -21,7 +21,7 @@ function Gallery() {
     }, [id])
 
   return (
-    <div>
+    <div class='flex-grow'>
         Gallery
         {images && images.map((image, i) => (
         <Photo key={i} image={image.fileName}/>

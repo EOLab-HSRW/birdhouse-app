@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 export default class Devices extends Component {
   render() {
     return (
-      <div>
+      <div class='flex-grow'>
         Device
       </div>
     )

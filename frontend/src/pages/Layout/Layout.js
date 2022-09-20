@@ -5,11 +5,11 @@ import Header from '../../components/Header/Header'
 
 function Layout() {
   return (
-    <>
+    <div class='flex flex-col min-h-screen'>
         <Header/>
         <Outlet/>
         <Footer/>
-    </>
+    </div>
   )
 }
 
