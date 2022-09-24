@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import Device from '../../components/Device/Device';
-import { getDevices } from '../../ImageAPI';
+import Device from '../components/Device';
+import { getDevices } from '../ImageAPI';
 
 function Devices() {
 
