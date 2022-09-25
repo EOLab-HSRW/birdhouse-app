@@ -4,13 +4,10 @@ import Devices from './pages/Devices';
 import Gallery from './pages/Gallery';
 import Layout from './pages/Layout';
 import NoPage from './pages/NoPage';
-import store from './store/store'
-import { Provider } from 'react-redux'
 
 class App extends Component{
   render() {
     return (
-      <Provider store={store}>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
@@ -20,7 +17,6 @@ class App extends Component{
             </Route>
           </Routes>
         </BrowserRouter>
-      </Provider>
     )
   }
 }

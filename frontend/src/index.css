@@ -1,3 +1,4 @@
+@import "//netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,5 +12,24 @@
     }
     #view:visited {
         @apply text-purple-600;
+    }
+    
+    #input{
+        transition: width 250ms ease-out;
+    }
+    
+    #input::placeholder{
+        transition: opacity 250ms ease-out;
+        font-family: FontAwesome;
+    }
+
+    #input:focus::placeholder{
+        opacity: 1;
+    }
+
+    #input:focus,
+    #input:not(:placeholder-shown){
+        width: 35%;
+        font-size: 24px;
     }
   }
