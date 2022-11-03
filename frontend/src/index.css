@@ -19,16 +19,12 @@
     }
     
     #input::placeholder{
-        transition: opacity 250ms ease-out;
         font-family: FontAwesome;
-    }
-
-    #input:focus::placeholder{
-        opacity: 1;
     }
 
     #input:focus,
     #input:not(:placeholder-shown){
+        padding: 16px;
         width: 35%;
         font-size: 24px;
     }

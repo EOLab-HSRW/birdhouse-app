@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import CurrentPhoto from '../components/CurrentPhoto';
 import Photo from '../components/Photo'
@@ -13,10 +13,29 @@ function Gallery() {
 
     const dispatch = useDispatch()
     const state = useSelector(state => state.image)
-  
+
     useEffect(() => {
-      dispatch(imagesDispatch(id))
+        dispatch(imagesDispatch(id))
     }, [dispatch, id])
+
+    const handlePress = useCallback(event => {
+        const { key } = event
+        console.log(key);
+        if (key === 'ArrowLeft' && current > 0) {
+            setCurrent(current-1)
+        } 
+        else if (key === 'ArrowRight' && current < state.data.length -1) {
+            setCurrent(current+1)
+        }
+    },[current, state.data.length])
+
+    useEffect(() => {
+        window.addEventListener('keydown', handlePress)
+        return ()=> {
+            window.removeEventListener('keydown', handlePress)
+        }
+    }, [handlePress])
+    
 
     const handleClick = (event) => {
         const key = event.target.getAttribute("id");
@@ -35,16 +54,18 @@ function Gallery() {
 
   return (
     <>
-    {state.loading ? 
-    <div className='flex-grow h-1/2 w-full flex flex-col items-center justify-evenly'></div>
+    {state.loading ?
+    <div className='flex-grow w-full flex flex-col items-center justify-evenly'>
+        Loading...
+    </div>
     :
-    <div className='flex-grow h-1/2 w-full flex flex-col items-center justify-evenly'>
-        <div className='w-full mb-3 flex flex-row items-center justify-evenly' >
+    <div className='flex-grow w-full flex flex-col items-center justify-evenly'>
+        <div className='w-full my-3 flex flex-row items-center justify-evenly' >
             { current > 0  ? <FiArrowLeftCircle onClick={event => handleLeft(event)} className='basis-1/5 hover:-translate-x-5 transition duration-[1s] ease-in-out hover:cursor-pointer' style={iconStyles}/> : <div className='basis-1/5'></div>}
             {state.data && <CurrentPhoto className='mx-48 basis-4/5' image={state.data[current]}/>}
             { current < state.data.length -1 ? <FiArrowRightCircle onClick={event => handleRight(event)} className='basis-1/5 hover:translate-x-5 transition duration-[1s] ease-in-out hover:cursor-pointer' style={iconStyles}/> : <div className='basis-1/5'></div>}
         </div>
-        <div id="photos" className='flex flex-row'>
+        <div id="photos" className='flex flex-row pb-3'>
             {state.data && state.data.map((image, i) => (
                     <Photo i={i} key={i} image={image.fileName} handler={handleClick} current={current}/>
             ))}
