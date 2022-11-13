@@ -68,10 +68,10 @@ function Gallery() {
         :
         <div className='flex-grow w-full flex flex-col items-center justify-evenly'>
             <Timeline data={dates} current={current}/>
-            <div className='w-full my-3 flex flex-row items-center justify-evenly' >
-                { current > 0  ? <FiArrowLeftCircle onClick={event => handleLeft(event)} className='basis-1/5 hover:-translate-x-5 transition duration-[1s] ease-in-out hover:cursor-pointer' style={iconStyles}/> : <div className='basis-1/5'></div>}
+            <div className='w-full my-3 flex flex-row items-center justify-evenly'>
+                { current > 0  ? <div className='basis-1/5 flex items-center justify-evenly py-10' onClick={event => handleLeft(event)}><FiArrowLeftCircle className='hover:-translate-x-2 transition duration-[.5s] ease-out hover:cursor-pointer' style={iconStyles}/></div>: <div className='basis-1/5'></div>}
                 {state.data && <CurrentPhoto className='mx-48 basis-4/5' image={state.data[current]}/>}
-                { current < state.data.length -1 ? <FiArrowRightCircle onClick={event => handleRight(event)} className='basis-1/5 hover:translate-x-5 transition duration-[1s] ease-in-out hover:cursor-pointer' style={iconStyles}/> : <div className='basis-1/5'></div>}
+                { current < state.data.length -1 ? <div className='basis-1/5 flex items-center justify-evenly py-10' onClick={event => handleRight(event)}><FiArrowRightCircle className='hover:translate-x-2 transition duration-[.5s] ease-out hover:cursor-pointer' style={iconStyles}/></div>: <div className='basis-1/5'></div>}
             </div>
             <div id="photos" className='flex flex-row pb-3'>
                 {state.data && state.data.map((image, i) => (

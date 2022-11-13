@@ -4,6 +4,7 @@
 @tailwind utilities;
 
 @layer base {
+    
     #view {
         @apply text-sm font-semibold text-purple-600;
     }
