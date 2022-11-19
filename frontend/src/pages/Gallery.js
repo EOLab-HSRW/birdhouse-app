@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { imagesDispatch } from '../features/helpers';
 import { DateTime } from 'luxon'
 import Timeline from '../components/Timeline';
+import Loader from '../components/Loader';
+import NoData from '../components/NoData';
 
 function Gallery() {
     
@@ -61,11 +63,9 @@ function Gallery() {
     return (
         <>
         {state.loading ?
-        <div className='flex-grow w-full flex flex-col items-center justify-evenly'>
-            Loading...
-        </div>
-
+        <Loader />
         :
+        state.data.length > 0 ?
         <div className='flex-grow w-full flex flex-col items-center justify-evenly'>
             <Timeline data={dates} current={current}/>
             <div className='w-full my-3 flex flex-row items-center justify-evenly'>
@@ -79,6 +79,8 @@ function Gallery() {
                 ))}
             </div>
         </div>
+        :
+        <NoData text='No Photos Available for this Device!'/>
         }
         </>
     )
