@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
-app.use("/image", express.static("backend/storage/images"));
+app.use("/image", express.static("storage/images"));
 
 app.use("/api/v1", router);
 

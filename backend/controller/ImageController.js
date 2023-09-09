@@ -26,7 +26,7 @@ module.exports = class ImageController {
 
     static getAll = async (req, res) => {
         try{
-            const all = await Image.find({device: req.params.id})
+            const all = await Image.find({device: req.params.id}).sort({createdAt: -1})
             
             return res.status(200).json({
                 code: 200,

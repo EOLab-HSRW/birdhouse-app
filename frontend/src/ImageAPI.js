@@ -1,4 +1,5 @@
-const api = "http://localhost:5000"
+
+const api = process.env.PROXY_API || 'http://localhost:8080'
 
 export const getImages = (id) =>
     fetch(`${api}/api/v1/image/getAll/${id}`, {
