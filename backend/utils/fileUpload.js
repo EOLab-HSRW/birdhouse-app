@@ -1,39 +1,68 @@
-const multer = require("multer");
-const path = require("path");
+const multer = require("multer")
+const path = require("path")
 
-const destination = './backend/storage/images'
+const destination = process.env.UPLOAD_DIR || "./uploads"
+
+const fs = require("fs")
+if (!fs.existsSync(destination)) {
+	fs.mkdirSync(destination, { recursive: true })
+}
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, destination)
-    },
-    filename: (req, file, cb) => {
-        cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
-    },
-});
+	destination: (req, file, cb) => {
+		cb(null, destination)
+	},
+	filename: (req, file, cb) => {
+		// Add additional sanitization for the filename
+		const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`
+		const ext = path.extname(file.originalname).toLowerCase()
+		cb(null, `${file.fieldname}_${uniqueSuffix}${ext}`)
+	},
+})
 
 const fileUpload = multer({
-    storage: storage,
-    limits: {
-        fileSize: 2 * 1024 * 1024, //2mb
-    },
-    fileFilter: (req, file, cb) => {
-        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
-            cb(null, true);
-        } else {
-            cb(null, false);
-            return cb(new Error('Only these files extensions allowed: PNG, JPG or JPEG!'));
-        }
-    },
-    onError: function(err, next){
-        return console.log('Error: ', err);
-    },
-});
+	storage: storage,
+	limits: {
+		files: 1,
+		fileSize: 2 * 1024 * 1024, //2mb
+	},
+	fileFilter: (req, file, cb) => {
+		const allowedMimes = ["image/png", "image/jpg", "image/jpeg"]
+		if (allowedMimes.includes(file.mimetype)) {
+			cb(null, true)
+		} else {
+			cb(new Error("Only PNG, JPG or JPEG files are allowed!"), false)
+		}
+	},
+})
 
 module.exports.send = (req, res, next) => {
-    
-    return fileUpload.single('image')(req, res, () => {
-        if (!req.file) return res.json({ error: 'Only these files extensions allowed: PNG, JPG or JPEG!' })
-        next()
-    })
+	fileUpload.single("image")(req, res, (err) => {
+		if (err instanceof multer.MulterError) {
+			// A Multer error occurred when uploading
+			if (err.code === "LIMIT_FILE_SIZE") {
+				return res.status(400).json({
+					error: "File size too large. Maximum size is 2MB.",
+				})
+			}
+			return res.status(400).json({ error: err.message })
+		} else if (err) {
+			// An unknown error occurred
+			return res.status(400).json({
+				error:
+					err.message || "Only PNG, JPG or JPEG files are allowed!",
+			})
+		}
+
+		// Check if file exists
+		if (!req.file) {
+			return res.status(400).json({
+				error: "Please select an image file to upload.",
+			})
+		}
+
+		// Add file URL to the request
+		req.fileUrl = `/uploads/${req.file.filename}`
+		next()
+	})
 }

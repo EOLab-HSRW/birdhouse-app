@@ -19,10 +19,15 @@ services:
         environment:
             - SECRET=MIIEoQIBAAKCAQBvHs/8oYGTKXkx4DXfDl2h2YHyhck5HB6NVsKNayDg8JDNSEzFmgngZAgQ3s41Ja+Z0LDkQ84HNKibyGvuw42hS8rXYo4E8WEvq/raLhG0HWhk6CuZ56G+Lvep9gNGj2Alhs6+hOvDlhLpb8QBEwRON45Qh9f/+2A90zVoegLH9GnmGW0tywMLG7y7fKrJgUhgIfrxbpizW+lJ31g2kZ5DiyIOyMiv4S/l89kgtRtqSN+pXbSRq7fWG5mqMX3X+0BETdscpsznmN2jDqO9RZy0CvmwXWIWRJq/ZRFvtXmXiL/uQF0t8l2E8qf0R7RDMIwVK7RXCu7VXs4q/g/Wi6d1AgMBAAECggEAS6zYSFxVOjuMZgMjrPzDl23hqaCjIVmdFPR5GoZSpd4vPx516jy1bTOyqoqSNG+t3zrYvRvQO+gIy876cmiLE8XiJjzgK02XujeNZvjo5ZkBd3cF+pJc/IBP+leoc21BNU1Rjz5GsbSKvJ95BKJG1F3RddaNq68uI+yq+rPdIP7QeKenRskNEzLb5EqTT454YUMGYW5GA4RxVdGy1Rs2wyEl/4PWopcyeaWSjxGt/X6ObH2esE9nDHEDK1ErfGWJCV3xk0+Ym1Jh9ARqZdM7YX+mxwwIqo654/fGgQoZqtgAfc/iKdOU3EYjb6U3L4BRa41OgCvFoTU9czdOq+FVAQKBgQDO2SZg2Z/x8paiqcz56FCN7rvVGhwfVbj11o7rx0i0QZ9eTt9Wrwwz8MiBNcRSo19F6LvYawN53q7w7ktltUoGU+RzUDdimeQxcmZa7xj8rMwMYxrGZWxPkArxQRAMhrwqV3N1zR5a9nD9oz9fqvXsb+J1Ah/KvhxPaTMoypiY6QKBgQCJhmjuPH0uZI3TUTOpkk0tnogbFADMr2RViuHhLSx8/bMuKAR7pf1KDSroBSnKwT4ODpHrTi0h9CqKAtwwj57i8eLNy/g51K+vx0QII32bjNl4e4scOgCxrf0lURp3dBZxNrZT74B1XXuQZ0ifur0HAWMpUhs+FHG4S77eldaCrQKBgHuc38ePJnuTqpvI97r9L26ylcOTV+0N8HvR3hVfQb6fXNsiLWwDLjq4EUrOU+XCxkPkAqYhxbEF9+v5rEs63OMNLYAQFxkwuGMoZ6y+KGOP7F0WuMCJigG+Jhvo8utZdYekPVbP3u0jS4D4Fv5YD6Fdd6rPOyqRFCAM0Ur2T91JAoGAI5blEMIWoyriiQ06kWeLEYM1Ncy3aED7die6zMsj+DSvagJxJo6OPduqfuDXL+FSbdDXck2I4ICPgae709VXCOQQDbH7Svv/ez3WHUUR/G822DcgiO15wIGGQWH7t24TYLkH9jDEzZqjn3sbEDsDMAzr3IWjBy3DQC5Z9sBQAwECgYB5h4RuqTpjeJI2ZjiAs3uXVIUVmBSCH+v106fS8gsDyyxY2D5sO7xDcPZv3Zg8nMY/Ozc7klSqlXkyEJXlZPWHfa+Nxw+AZBXE8U3s/f01gsVviPdDJbGhJ5RP4P7vJpMEoYWGdA2tHXTYp6QLB5bTxSVlrx1hVN7zBy32FZFquQ==
             - DB_URL=mongodb://db:27017/test
+            # Update environment variable path
+            - UPLOAD_DIR=/app/uploads
         ports:
             - "8080:8080"
         container_name: backend-docker
         restart: always
+        volumes:
+            # Use named volume instead of bind mount
+            - uploads:/app/uploads
         links:
             - db
 
@@ -35,3 +40,7 @@ services:
         restart: always
         volumes:
             - ./mdbInit.js:/docker-entrypoint-initdb.d/mdbInit.js:ro
+
+volumes:
+    uploads:
+        driver: local

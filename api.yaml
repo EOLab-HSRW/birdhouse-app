@@ -1,0 +1,184 @@
+openapi: 3.0.0
+info:
+  title: Image API
+  description: This is an Image API
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/seifaldin.aboelella/IMAGE-API/1.0.0
+  description: SwaggerHub API Auto Mocking
+tags:
+- name: admin
+  description: Secured Admin-only calls
+- name: frontend
+  description: Operations available to frontend
+paths:
+  /user/login:
+    post:
+      tags:
+      - admin
+      summary: login to get a token
+      description: |
+        login using username, password, deviceId and schoolId to get a token
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/login'
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/login-response'
+  /image/add-image:
+    post:
+      tags:
+      - admin
+      summary: uploads photo to server
+      description: |
+        uploads photo to server using token
+      operationId: upload
+      parameters:
+      - name: authorization
+        in: header
+        description: Token for authentication
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/image_addimage_body'
+        required: true
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/image'
+  /image/getAll/:id:
+    post:
+      tags:
+      - frontend
+      summary: get all device photos
+      description: |
+        get all device photos
+      operationId: getDeviceImages
+      parameters:
+      - name: id
+        in: query
+        description: device id
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get-images-response'
+  /device/getAll:
+    post:
+      tags:
+      - frontend
+      summary: get all devices
+      description: |
+        get all devices
+      operationId: getDevices
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get-devices-response'
+components:
+  schemas:
+    user:
+      required:
+      - password
+      - username
+      type: object
+      properties:
+        _id:
+          type: string
+        username:
+          type: string
+          example: admin
+        password:
+          type: string
+          example: admin
+    device:
+      required:
+      - deviceName
+      - schoolName
+      type: object
+      properties:
+        _id:
+          type: string
+        deviceName:
+          type: string
+          example: Device1
+        schoolName:
+          type: string
+          example: School1
+    image:
+      required:
+      - device
+      - fileName
+      type: object
+      properties:
+        _id:
+          type: string
+        fileName:
+          type: string
+          example: image_1730560355763-489743739.jpg
+        device:
+          $ref: '#/components/schemas/device/properties/_id'
+        createdAt:
+          type: string
+          example: 2024-11-02T15:12:35.767Z
+        updatedAt:
+          type: string
+          example: 2024-11-02T15:12:35.767Z
+    login:
+      required:
+      - device
+      - login
+      type: object
+      properties:
+        login:
+          $ref: '#/components/schemas/user'
+        device:
+          $ref: '#/components/schemas/device'
+    login-response:
+      type: object
+      properties:
+        device:
+          $ref: '#/components/schemas/device/properties/_id'
+        token:
+          type: string
+    get-images-response:
+      type: array
+      items:
+        $ref: '#/components/schemas/image'
+    get-devices-response:
+      type: array
+      items:
+        $ref: '#/components/schemas/device'
+    image_addimage_body:
+      type: object
+      properties:
+        upfile:
+          type: string
+          description: The file to upload.
+          format: binary
