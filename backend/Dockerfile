@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:20-alpine
 
 RUN mkdir -p /usr/src/app
 RUN mkdir -p /usr/src/app/backend
@@ -6,6 +6,7 @@ RUN mkdir -p /usr/src/app/backend
 WORKDIR /usr/src/app/backend
 
 COPY ./package.json ./
+COPY ./package-lock.json ./
 
 RUN npm install
 
